@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Claim>
+
+<h2 class="mb-3">Coordinator Dashboard</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Lecturer</th>
+            <th>Claim Type</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Submitted</th>
+            <th>Reviewed By</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.ClaimType</td>
+                <td>@claim.Amount</td>
+                <td>@claim.Status</td>
+                <td>@claim.SubmissionDate.ToString("yyyy-MM-dd")</td>
+                <td>@(string.IsNullOrEmpty(claim.ReviewedBy) ? "<span class=\"text-muted\">-</span>" : claim.ReviewedBy)</td>
+                <td>
+                    @if (claim.Status == ClaimStatus.Pending)
+                    {
+                        <!-- APPROVE BUTTON -->
+                        <form method="post" asp-action="ApproveClaim" asp-route-id="@claim.Id" style="display:inline-block;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+
+                        <!-- REJECT BUTTON -->
+                        <button type="button" class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#rejectModal-@claim.Id">
+                            Reject
+                        </button>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Actions</span>
+                    }
+                </td>
+            </tr>
+
+            <!-- REJECT MODAL -->
+            <div class="modal fade" id="rejectModal-@claim.Id" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" asp-action="RejectClaim" asp-route-id="@claim.Id">
+                            @Html.AntiForgeryToken()
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Reject Claim</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <label for="rejectionReason-@claim.Id" class="form-label">Reason for Rejection</label>
+                                <textarea id="rejectionReason-@claim.Id" class="form-control" name="rejectionReason" required></textarea>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,40 @@
+﻿@model List<Prog_Poe.Models.Claim>
+
+<h2>My Submitted Claims</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<a class="btn btn-primary mb-3" href="/Home/SubmitClaim">Submit New Claim</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Rate</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Reviewer</th>
+            <th>Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.SubmissionDate.ToShortDateString()</td>
+                <td>@c.HoursWorked</td>
+                <td>@c.HourlyRate</td>
+                <td>@((c.HoursWorked ?? 0) * (c.HourlyRate ?? 0))</td>
+                <td>@c.Status</td>
+                <td>@c.ReviewerName</td>
+                <td>@c.RejectionReason</td>
+            </tr>
+        }
+    </tbody>
+</table>

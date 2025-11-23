@@ -1,0 +1,14 @@
+﻿@model Prog_Poe.Models.Claim
+
+<h2>Reject Claim @Model.Id</h2>
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label>Reason for Rejection</label>
+        <textarea name="rejectionReason" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-danger mt-3">Submit Rejection</button>
+</form>

@@ -29,7 +29,7 @@ These instructions will help you set up the project locally.
 
    dotnet run --project <path-to-project.csproj>
 
-Replace <path-to-project.csproj> with the path to the C# project file if necessary.
+ <path-to-project.csproj> with the path to the C# project file if necessary.
 
 ### Run the front-end (HTML)
 - If the HTML files are static, open the main HTML file (for example, index.html) in your browser.
@@ -37,25 +37,18 @@ Replace <path-to-project.csproj> with the path to the C# project file if necessa
 
   npx http-server ./ -o
 
-## Project structure (example)
+## Project structure 
 
 - / (repository root)
   - README.md
   - src/ (C# source files)
   - www/ or public/ (HTML files)
 
-Adjust paths to match the actual layout in this repository.
-
-## Contributing
-
-Contributions, issues, and feature requests are welcome. Please create issues or pull requests in the repository.
-
 ## License
 
-This project does not include a license file. If you wish to add one, consider adding an OSI-approved license such as the MIT License.
+This project does not include a license file.
 
 ## Author
 
 Lusani-Rams1
 
-If you need specific instructions added (build/run/test paths, dependencies, screenshots), tell me what to include and I will update the README.
